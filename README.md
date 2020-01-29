@@ -6,7 +6,7 @@ Please, do read the following page to get familiar with some required setups for
 https://ethernetfmc.com/rgmii-interface-timing-considerations/
 
 #### [2] Device Tree Source
-
+```
 &fec {
 	pinctrl-names = "default";
 	/* pinctrl-0 = <&pinctrl_enet>; */
@@ -88,7 +88,7 @@ https://ethernetfmc.com/rgmii-interface-timing-considerations/
 		};
 	};
 };
-
+```
 #### [3] Setting the kernel.org vanilla kernel to integrate the mv88e6190 switch into the kernel
 
 	Switch (and switch-ish) device support @ Networking support->Networking options
