@@ -1,4 +1,4 @@
-## Setting the Marvell mv88e6190 switch with i.MX6 via rgmii interface [MAC to MAC layer]
+### Setting the Marvell mv88e6190 switch with i.MX6 via rgmii interface [ETH/BR layer]
 
 #### [1] Adding TxC and RxC clock skew
 
@@ -12,7 +12,7 @@ https://ethernetfmc.com/rgmii-interface-timing-considerations/
 	/* pinctrl-0 = <&pinctrl_enet>; */
 	pinctrl-0 = <&pinctrl_enet_5>;
 
- 	/*
+	/*
 	 * Instead phy-mode "rgmii" the "rgmii-id" mode is entered, because
 	 * i.MX6 silicon has the silicon bug, and it is not able to impose
 	 * the required delay (clock skew) on TxC and RxC rgmii lines. Given
@@ -57,7 +57,7 @@ https://ethernetfmc.com/rgmii-interface-timing-considerations/
 						speed = <1000>;
 						full-duplex;
 					};
-                		};
+				};
 
 				port@1 {
 					reg = <1>;
@@ -119,3 +119,21 @@ https://ethernetfmc.com/rgmii-interface-timing-considerations/
 	ip link lan4 master br0
 	ip link lan5 master br0
 	ip addr add 192.168.1.4/24 dev br0
+
+#### [5] References: DSA driver kernel extension for dsa mv88e6190 switch
+
+	https://www.spinics.net/lists/netdev/msg600586.html (by Zoran Stojsavljevic)
+	https://www.spinics.net/lists/netdev/msg600590.html (by Andrew Lunn)
+	https://www.spinics.net/lists/netdev/msg600985.html (by Zoran Stojsavljevic)
+	https://www.spinics.net/lists/netdev/msg600987.html (by Andrew Lunn)
+	https://www.spinics.net/lists/netdev/msg601303.html (by Zoran Stojsavljevic)
+	https://www.spinics.net/lists/netdev/msg601325.html (by Andrew Lunn)
+	https://www.spinics.net/lists/netdev/msg601368.html (by Zoran Stojsavljevic)
+	https://www.spinics.net/lists/netdev/msg601390.html (by Andrew Lunn)
+	https://www.spinics.net/lists/netdev/msg601403.html (by Zoran Stojsavljevic)
+
+#### [6] IMPORTANT NOTE to Marvell mv88exxxx users (about Marvell DSA bug)
+
+The Marvell DSA (Linux Distributed Switch Architecture) switch bugs for DSA were solved in the Linux kernel 5.15.x, since the patches for the bugs in the Marvell DSA driver were ported to the kernel 5.15.x releases, but due to complexity and too many changes in the DSA architecture these changes were not back ported to earlier than 5.15.x kernels.
+
+All of this was tested on a Linksys WRT3200ACMv1 device running OpenWRT SNAPSHOT r22702-cf8d861978 with Linux kernel version 5.15.109.
